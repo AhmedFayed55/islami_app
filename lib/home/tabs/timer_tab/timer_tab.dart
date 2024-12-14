@@ -1,8 +1,24 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:islami_app/home/app_colors.dart';
 
-class TimerTab extends StatelessWidget {
-  int selectedIndex = 2;
+class TimerTab extends StatefulWidget {
+  @override
+  State<TimerTab> createState() => _TimerTabState();
+}
+
+class _TimerTabState extends State<TimerTab> {
+  bool isMuted = false;
+  List<String> prayers = [
+    "Fajr",
+    "Sunrise",
+    "Dhuhr",
+    "Asr",
+    "Maghrib",
+    "Isha",
+  ];
+  List<String> times = ["05:16", "06:50", "11:54", "02:40", "04:58", "06:23"];
+  List<String> am_pm = ["AM", "AM", "AM", "PM", "PM", "PM"];
 
   @override
   Widget build(BuildContext context) {
@@ -17,101 +33,132 @@ class TimerTab extends StatelessWidget {
             child: Stack(
               children: [
                 Image.asset("assets/images/times_background.png"),
-                Padding(
-                  padding:
-                      EdgeInsetsDirectional.only(start: 18, end: 18, top: 12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      text("16 Jul,\n2024", 16),
-                      Column(
+                Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.only(start: 18, end: 18, top: 12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "Prayer Time",
-                            style: TextStyle(
-                                color: Color(0xB5202020),
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "Tuesday",
-                            style: TextStyle(
-                                color: Color(0xE6202020),
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      text("09 Muh,\n1446", 16),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  right: 0,
-                  left: 0,
-                  bottom: 50,
-                  child: SizedBox(
-                    height: 160,
-                    child: ListView.separated(
-                      controller: PageController(initialPage: 1000),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 5,
-                      itemBuilder: (context, index) {
-                        bool isCenterBox = index == selectedIndex;
-
-                        return Container(
-                          width: isCenterBox ? 120 : 80,
-                          height: isCenterBox ? 100 : 170,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Stack(
-                            alignment: Alignment.center,
+                          text("16 Jul,\n2024", 16),
+                          Column(
                             children: [
-                              Image.asset("assets/images/sdsdsd.png"),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    index == 0
-                                        ? "Fajr"
-                                        : index == 1
-                                            ? "Dhuhr"
-                                            : index == 2
-                                                ? "ASR"
-                                                : index == 3
-                                                    ? "Maghrib"
-                                                    : "Isha",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  SizedBox(height: 10),
-                                  Text(
-                                    "04:38\nPM",
-                                    style: TextStyle(
-                                      fontSize: isCenterBox ? 22 : 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
+                              Text(
+                                "Prayer Time",
+                                style: TextStyle(
+                                    color: Color(0xB5202020),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "Tuesday",
+                                style: TextStyle(
+                                    color: Color(0xE6202020),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return SizedBox(width: 10);
-                      },
+                          text("09 Muh,\n1446", 16),
+                        ],
+                      ),
                     ),
-                  ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    CarouselSlider.builder(
+                      options: CarouselOptions(
+                        height: 150,
+                        viewportFraction: 0.30,
+                        enlargeCenterPage: true,
+                        scrollDirection: Axis.horizontal,
+                        enableInfiniteScroll: true,
+                        enlargeStrategy: CenterPageEnlargeStrategy.scale,
+                        enlargeFactor: 0.2,
+                      ),
+                      itemCount: prayers.length,
+                      itemBuilder: (BuildContext context, int itemIndex,
+                              int pageViewIndex) =>
+                          Container(
+                        margin: EdgeInsets.only(left: 7),
+                        alignment: Alignment.center,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              AppColor.black,
+                              AppColor.gold,
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            text(prayers[itemIndex], 14),
+                            text(times[itemIndex], 24),
+                            text(am_pm[itemIndex], 14)
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 25),
+                      child: Row(
+                        children: [
+                          Spacer(),
+                          Text(
+                            "Next Pray ",
+                            style: TextStyle(
+                                color: Color(0xBF202020),
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "- 02:40 ",
+                            style: TextStyle(
+                                color: Color(0xFF202020),
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Spacer(),
+                          IconButton(
+                              icon: Icon(
+                                isMuted ? Icons.volume_off : Icons.volume_up,
+                                color: Colors.black,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  isMuted = !isMuted;
+                                });
+                              })
+                        ],
+                      ),
+                    )
+                  ],
                 ),
               ],
             ),
-          )
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          text("Azkar", 25),
+          SizedBox(
+            height: 15,
+          ),
+          Row(children: [
+            Image.asset("assets/images/azkar1.png"),
+            SizedBox(
+              width: 10,
+            ),
+            Image.asset("assets/images/azkar2.png"),
+          ])
         ],
       ),
     );
@@ -120,6 +167,7 @@ class TimerTab extends StatelessWidget {
   Widget text(String text, double font) {
     return Text(
       text,
+      textAlign: TextAlign.center,
       style: TextStyle(fontSize: font, color: Color(0xFFFFFFFF)),
     );
   }
