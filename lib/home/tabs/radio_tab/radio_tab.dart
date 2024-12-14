@@ -35,7 +35,6 @@ class _RadioTabState extends State<RadioTab> {
   List<bool> isPlayingReciters = List.filled(7, false);
   List<bool> isVolumeOnReciters = List.filled(7, true);
 
-  List<String> backgrounds = List.filled(7, "assets/images/radio_back_nv1.png");
   String background2 = "assets/images/sound_wave.png";
 
   @override
@@ -121,7 +120,7 @@ class _RadioTabState extends State<RadioTab> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       image: DecorationImage(
-                        image: AssetImage(backgrounds[index]),
+                        image: AssetImage(background2),
                         fit: BoxFit.cover,
                       )),
                   child: Column(
@@ -142,7 +141,6 @@ class _RadioTabState extends State<RadioTab> {
                             onPressed: () {
                               setState(() {
                                 isFavorite[index] = !isFavorite[index];
-                                backgrounds[index] = background2;
                               });
                             },
                             icon: Icon(
@@ -157,7 +155,6 @@ class _RadioTabState extends State<RadioTab> {
                             onPressed: () {
                               setState(() {
                                 isPlaying[index] = !isPlaying[index];
-                                backgrounds[index] = background2;
                               });
                             },
                             icon: Icon(
@@ -172,7 +169,6 @@ class _RadioTabState extends State<RadioTab> {
                             onPressed: () {
                               setState(() {
                                 isVolumeOn[index] = !isVolumeOn[index];
-                                backgrounds[index] = background2;
                               });
                             },
                             icon: Icon(
