@@ -35,7 +35,7 @@ class _RadioTabState extends State<RadioTab> {
   List<bool> isPlayingReciters = List.filled(7, false);
   List<bool> isVolumeOnReciters = List.filled(7, true);
 
-  String background2 = "assets/images/sound_wave.png";
+  String background2 = "assets/images/radio_back_nv1.png";
 
   @override
   Widget build(BuildContext context) {
