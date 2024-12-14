@@ -13,6 +13,8 @@ class Sequential extends StatefulWidget {
 class _SuraDetailsScreenState extends State<Sequential> {
   List<String> verses = [];
 
+  String ayat = "";
+
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments as SuraModel;
@@ -61,16 +63,17 @@ class _SuraDetailsScreenState extends State<Sequential> {
                           return Container(
                             padding: const EdgeInsets.only(left: 35, right: 35),
                             child: Text(
-                              verses[index],
+                              ayat,
                               // textAlign: TextAlign.center,
                               textDirection: TextDirection.rtl,
                               style: TextStyle(
                                 color: AppColor.gold,
+                                fontSize: 20,
                               ),
                             ),
                           );
                         },
-                        itemCount: verses.length,
+                        itemCount: 1,
                       ),
               )
             ],
@@ -85,6 +88,12 @@ class _SuraDetailsScreenState extends State<Sequential> {
         await rootBundle.loadString("assets/files/suras/${index + 1}.txt");
     List<String> suraLines = suraContent.split("\n");
     verses = suraLines;
+    ayat = suraLines.asMap().entries.map((entry) {
+      int index = entry.key;
+      String verse = entry.value;
+      return "$verse (${index + 1})";
+    }).join(" ");
+
     setState(() {});
   }
 }
